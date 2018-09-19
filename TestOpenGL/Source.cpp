@@ -101,12 +101,16 @@ int main() {
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
-
-
+	//float vertices[] = {
+	//	-0.5,-0.5,0,
+	//	0.5,-0.5,0,
+	//	0,0.5,0
+	//};
 	float vertices[] = {
-		-0.5,-0.5,0,
-		0.5,-0.5,0,
-		0,0.5,0
+		0.5f, 0.5f, 0.0f,   // 右上角
+		0.5f, -0.5f, 0.0f,  // 右下角
+		-0.5f, -0.5f, 0.0f, // 左下角
+		-0.5f, 0.5f, 0.0f   // 左上角
 	};
 
 	unsigned int VBO;
