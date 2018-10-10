@@ -19,22 +19,22 @@ void processInput(GLFWwindow* window) {
 // shader vertex
 const char *vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
-"out vec4 vertexColor;\n"
+"layout (location = 1) in vec3 aColor;\n"
+"out vec3 vertexColor;\n"
 "void main()\n"
 "{\n"
 "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"	vertexColor=vec4(aPos.x,aPos.y,aPos.z,1);\n"
+"	vertexColor=aColor;\n"
 "}\0";
 
 const char *fragmentShaderSource = "#version 330 core\n"
-"in vec4 vertexColor;"
+"in vec3 vertexColor;"
 "out vec4 FragColor;\n"
-"uniform vec4 outColor;\n"
 "void main()\n"
 "{\n"
 //"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-//"	FragColor=vertexColor;\n"
-"	FragColor=outColor;\n"
+"	FragColor=vec4(vertexColor,1);\n"
+//"	FragColor=outColor;\n"
 "}\n\0";
 
 void renderer() {
@@ -113,10 +113,10 @@ int main() {
 	//	0,0.5,0
 	//};
 	float vertices[] = {
-		0.5f, 0.5f, 0.0f,   // 右上角
-		0.5f, -0.5f, 0.0f,  // 右下角
-		-0.5f, -0.5f, 0.0f, // 左下角
-		-0.5f, 0.5f, 0.0f   // 左上角
+		0.5f, 0.5f, 0.0f,		1,0,0,   // 右上角
+		0.5f, -0.5f, 0.0f,		0,1,0,  // 右下角
+		-0.4f, -0.5f, 0.0f,	0,0,1, // 左下角
+		-0.5f, 0.5f, 0.0f,		1,0,0   // 左上角
 	};
 
 	unsigned int indices[] = {
@@ -139,8 +139,10 @@ int main() {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3*sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 
 	//glBindBuffer(GL_ARRAY_BUFFER,0);
@@ -175,10 +177,10 @@ int main() {
 		glUseProgram(shaderProgram);
 
 
-		float timeValue = glfwGetTime();
-		float greenValue = (sin(timeValue) / 2) + 0.5;
-		int vertexColorLocation = glGetUniformLocation(shaderProgram, "outColor");
-		glUniform4f(vertexColorLocation, 1-greenValue, greenValue, 0, 1);
+		//float timeValue = glfwGetTime();
+		//float greenValue = (sin(timeValue) / 2) + 0.5;
+		//int vertexColorLocation = glGetUniformLocation(shaderProgram, "outColor");
+		//glUniform4f(vertexColorLocation, 1-greenValue, greenValue, 0, 1);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(window);
