@@ -1,6 +1,8 @@
 #include <iostream>
+#include "glad.c"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+// #include <GLFW/glfw3native.h>
 
 using namespace std;
 
@@ -42,7 +44,6 @@ void renderer() {
 }
 
 int main() {
-
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -55,6 +56,10 @@ int main() {
 		cout << "create gl window failed" << endl;
 		glfwTerminate();
 		return -1;
+	}else{
+
+
+	cout<<"hi"<<endl;
 	}
 
 	glfwMakeContextCurrent(window);
