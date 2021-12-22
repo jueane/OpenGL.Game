@@ -351,3 +351,4 @@ CTestTestfile.cmake
 _deps
 
 cmakebuild
+cmake-build-debug
