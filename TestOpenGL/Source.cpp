@@ -55,9 +55,8 @@ int main()
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    auto shader = new Shader("D:\\cpp\\TestOpenGL\\TestOpenGL\\Shader\\vertex.shader",
-                             "D:\\cpp\\TestOpenGL\\TestOpenGL\\Shader\\fragment.shader");
-
+    auto shader = new Shader("..\\TestOpenGL\\Shader\\shader1.vert",
+                             "..\\TestOpenGL\\Shader\\shader1.frag");
 
     //float vertices[] = {
     //	-0.5,-0.5,0,
