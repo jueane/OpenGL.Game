@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 17)
 project(TestOpenGL)
-add_executable(TestOpenGL TestOpenGL/Source.cpp TestOpenGL/Shader.h TestOpenGL/Shader.cpp)
+add_executable(TestOpenGL TestOpenGL/Source.cpp TestOpenGL/Utils/ShaderUtil.h TestOpenGL/Utils/ShaderUtil.cpp TestOpenGL/Feature/DrawTriangle.h TestOpenGL/Feature/DrawTriangle.cpp TestOpenGL/Utils/TextureUtil.cpp TestOpenGL/Utils/TextureUtil.h)
 
 target_include_directories(TestOpenGL PUBLIC ${PROJECT_SOURCE_DIR}/Ref/Include/)
 
 # set(source
-# TestOpenGL/Shader.h
+# TestOpenGL/ShaderUtil.h
 # )
 
 

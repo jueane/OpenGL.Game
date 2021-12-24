@@ -1,22 +1,19 @@
-#include "Shader.h"
+#include "ShaderUtil.h"
 
-Shader::Shader()
+ShaderUtil::ShaderUtil()
 {
     cout << "hi...." << endl;
 }
 
-Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
+ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath)
 {
     cout << "Compile shader ..." << endl;
-
     string vertexCode;
     string fragCode;
     ifstream vShaderFile;
     ifstream fShaderFile;
-
     vShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
     fShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
-
     try
     {
         vShaderFile.open(vertexPath);
@@ -25,10 +22,8 @@ Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
         stringstream fStream;
         vStream << vShaderFile.rdbuf();
         fStream << fShaderFile.rdbuf();
-
         vShaderFile.close();
         fShaderFile.close();
-
         vertexCode = vStream.str();
         fragCode = fStream.str();
     }
@@ -37,7 +32,6 @@ Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
     {
         cout << "Read file failed ," << e.what() << endl;
     }
-
     const char *vShaderCode = vertexCode.c_str();
     const char *fShaderCode = fragCode.c_str();
 
@@ -51,7 +45,6 @@ Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
     // 顶点着色器
 
     vertex = glCreateShader(GL_VERTEX_SHADER);
-
     glShaderSource(vertex, 1, &vShaderCode, nullptr);
     glCompileShader(vertex);
     // 打印编译错误
@@ -59,7 +52,7 @@ Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
     if (!success)
     {
         glGetShaderInfoLog(vertex, 512, nullptr, infoLog);
-        cout << "Shader compile error in vertex. " << infoLog << endl;
+        cout << "ShaderUtil compile error in vertex. " << infoLog << endl;
     }
 
     // 片段着急器
@@ -71,7 +64,7 @@ Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
     if (!success)
     {
         glGetShaderInfoLog(fragment, 512, nullptr, infoLog);
-        cout << "Shader compile error in fragment. " << infoLog << endl;
+        cout << "ShaderUtil compile error in fragment. " << infoLog << endl;
     }
 
     // 创建着色器程序
@@ -85,33 +78,32 @@ Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
     if (!success)
     {
         glGetProgramInfoLog(ID, 512, nullptr, infoLog);
-        cout << "Shader link error in. " << infoLog << endl;
+        cout << "ShaderUtil link error in. " << infoLog << endl;
     }
-
-    cout << "Shader compile success." << endl;
+    cout << "ShaderUtil compile success." << endl;
 
     // 删除着色器
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 }
 
-void Shader::Use()
+void ShaderUtil::Use()
 {
     cout << "use shader " << ID << endl;
     glUseProgram(ID);
 }
 
-void Shader::setBool(const string &name, bool value) const
+void ShaderUtil::setBool(const string &name, bool value) const
 {
     glUniform1i(glad_glGetUniformLocation(ID, name.c_str()), (int) value);
 }
 
-void Shader::setInt(const string &name, int value) const
+void ShaderUtil::setInt(const string &name, int value) const
 {
     glUniform1i(glad_glGetUniformLocation(ID, name.c_str()), value);
 }
 
-void Shader::setFloat(const string &name, float value) const
+void ShaderUtil::setFloat(const string &name, float value) const
 {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
