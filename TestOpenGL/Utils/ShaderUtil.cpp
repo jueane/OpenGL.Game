@@ -12,6 +12,8 @@ ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath)
     string fragCode;
     ifstream vShaderFile;
     ifstream fShaderFile;
+    cout << "vertex path: " << vertexPath;
+    cout << "fragment path: " << fragmentPath;
     vShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
     fShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
     try
@@ -31,6 +33,7 @@ ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath)
     // catch (exception e)
     {
         cout << "Read file failed ," << e.what() << endl;
+        return;
     }
     const char *vShaderCode = vertexCode.c_str();
     const char *fShaderCode = fragCode.c_str();
