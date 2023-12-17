@@ -15,3 +15,4 @@ target_include_directories(TestOpenGL PUBLIC ${PROJECT_SOURCE_DIR}/Ref/Include/)
 #target_link_libraries(TestOpenGL PRIVATE ${PROJECT_SOURCE_DIR}/Ref/Libs/glfw3.lib)
 target_link_libraries(TestOpenGL PRIVATE ${PROJECT_SOURCE_DIR}/Ref/Libs/libglfw3.a)
 
+file(COPY ${CMAKE_SOURCE_DIR}/TestOpenGL/Shader DESTINATION ${CMAKE_BINARY_DIR})

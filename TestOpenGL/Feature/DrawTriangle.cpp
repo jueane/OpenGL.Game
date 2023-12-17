@@ -55,8 +55,8 @@ int DrawTriangle::Draw()
     glfwSetFramebufferSizeCallback(window, DrawTriangle::framebuffer_size_callback);
 //    auto shader = new ShaderUtil("..\\TestOpenGL\\Shader\\shader1.vert",
 //                             "..\\TestOpenGL\\Shader\\shader1.frag");
-    auto shader = new ShaderUtil("D:\\develop\\cpp\\OpenGL.Game\\TestOpenGL\\Shader\\shader1.vert",
-                                 "D:\\develop\\cpp\\OpenGL.Game\\TestOpenGL\\Shader\\shader1.frag");
+    auto shader = new ShaderUtil("Shader\\shader1.vert",
+                                 "Shader\\shader1.frag");
 
     //float vertices[] = {
     //	-0.5,-0.5,0,
