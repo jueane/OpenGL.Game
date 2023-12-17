@@ -5,10 +5,10 @@
 #ifndef TESTOPENGL_DRAWTRIANGLE_H
 #define TESTOPENGL_DRAWTRIANGLE_H
 
-#include "../Utils/ShaderUtil.h"
 #include "../Utils/TextureUtil.h"
+#include "../Utils/ShaderUtil.h"
 #include <GLFW/glfw3.h>
-
+#include <glad/glad.h>
 
 using namespace std;
 

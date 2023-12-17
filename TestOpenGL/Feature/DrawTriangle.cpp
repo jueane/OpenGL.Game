@@ -7,6 +7,7 @@
 
 #include "DrawTriangle.h"
 
+
 DrawTriangle::DrawTriangle()
 {
 }

@@ -8,7 +8,7 @@ add_executable(TestOpenGL
         TestOpenGL/Utils/ShaderUtil.cpp
         TestOpenGL/Feature/DrawTriangle.cpp
         TestOpenGL/Utils/TextureUtil.cpp
-        )
+        TestOpenGL/std_image_impl.h)
 
 target_include_directories(TestOpenGL PUBLIC ${PROJECT_SOURCE_DIR}/Ref/Include/)
 

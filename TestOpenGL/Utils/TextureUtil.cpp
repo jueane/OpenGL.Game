@@ -4,13 +4,8 @@
 
 #include "TextureUtil.h"
 
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
+#include "../std_image_impl.h"
 #include "../glad.c"
-
-
 
 TextureUtil::TextureUtil(const char *path)
 {
