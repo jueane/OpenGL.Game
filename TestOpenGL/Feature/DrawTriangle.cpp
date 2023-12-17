@@ -5,8 +5,6 @@
 #ifndef TESTOPENGL_DRAWTRIANGLE_CPP
 #define TESTOPENGL_DRAWTRIANGLE_CPP
 
-#include "../Utils/ShaderUtil.h"
-#include "../glad.c"
 #include "DrawTriangle.h"
 
 DrawTriangle::DrawTriangle()

@@ -5,6 +5,8 @@
 #ifndef TESTOPENGL_TEST1_H
 #define TESTOPENGL_TEST1_H
 
+#include <iostream>
+#include <filesystem>
 
 class Test1
 {

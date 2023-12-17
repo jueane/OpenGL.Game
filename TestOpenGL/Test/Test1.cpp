@@ -3,8 +3,9 @@
 //
 
 #include "Test1.h"
-#include <iostream>
-#include <filesystem>
+//#include "../Utils/TextureUtil.h"
+//#include "../Utils/ShaderUtil.h"
+//#include "../glad.c"
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -31,7 +32,16 @@ void Test2()
     }
 }
 
+void Test3()
+{
+//    auto tex = new TextureUtil("resources/textures/container.jpg");
+//    unsigned int texture;
+//    glGenTextures(1, &texture);
+
+}
+
 void Test1::Test()
 {
 //    Test2();
+    Test3();
 }
