@@ -2,7 +2,7 @@
 
 int main()
 {
-    auto drawTriangle=new DrawTriangle();
+    auto drawTriangle = new DrawTriangle();
     drawTriangle->Draw();
 
     return 0;
