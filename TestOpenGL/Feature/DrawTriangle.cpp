@@ -8,26 +8,21 @@
 #include "DrawTriangle.h"
 
 
-DrawTriangle::DrawTriangle()
-{
+DrawTriangle::DrawTriangle() {
 }
 
-void DrawTriangle::framebuffer_size_callback(GLFWwindow *window, int width, int height)
-{
+void DrawTriangle::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     cout << "reset window size" << endl;
     glViewport(0, 0, width, height);
 }
 
-void DrawTriangle::processInput(GLFWwindow *window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
+void DrawTriangle::processInput(GLFWwindow *window) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
     }
 }
 
-int DrawTriangle::Draw()
-{
+int DrawTriangle::Draw() {
     auto err = glfwInit();
     cout << "init result " << err << endl;
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -35,25 +30,26 @@ int DrawTriangle::Draw()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     GLFWwindow *window = glfwCreateWindow(800, 600, "Test OpenGL", NULL, NULL);
-    if (window == NULL)
-    {
+    if (window == NULL) {
         cout << "create gl window failed" << endl;
         glfwTerminate();
         return -1;
-    } else
-    {
+    } else {
         cout << "Window created" << endl;
     }
     glfwMakeContextCurrent(window);
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
-    {
+    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
         cout << "failed init glad" << endl;
         return -1;
     }
+
+    // 输出支持的顶点数量
+    int nrAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+    cout << "Support vertex attributes count: " << nrAttributes << endl;
+
     glViewport(0, 0, 800, 600);
     glfwSetFramebufferSizeCallback(window, DrawTriangle::framebuffer_size_callback);
-//    auto shader = new ShaderUtil("..\\TestOpenGL\\Shader\\shader1.vert",
-//                             "..\\TestOpenGL\\Shader\\shader1.frag");
     auto shader = new ShaderUtil("Shader\\shader1.vert",
                                  "Shader\\shader1.frag");
 
@@ -102,11 +98,7 @@ int DrawTriangle::Draw()
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glfwSwapBuffers(window);
-    int nrAttributes;
-    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-    cout << "Support vertex attributes count: " << nrAttributes << endl;
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         this->processInput(window);
 
         //glClearColor(0.3, 0.3, 0.5, 1);
