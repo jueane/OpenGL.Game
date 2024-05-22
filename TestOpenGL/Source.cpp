@@ -1,16 +1,19 @@
 #include "Feature/DrawTriangle.h"
+#include "Feature/DrawTexture.h"
 #include "Test/Test1.h"
 
-int main()
-{
+int main() {
     auto err = glfwInit();
     cout << "init result " << err << endl;
 
     auto test1 = new Test1();
     test1->Test();
 
-    auto drawTriangle = new DrawTriangle();
-    drawTriangle->Draw();
+//    auto drawTriangle = new DrawTriangle();
+//    drawTriangle->Draw();
+
+    auto drawTex = new DrawTexture();
+    drawTex->Draw();
 
 
     int nrAttributes;
