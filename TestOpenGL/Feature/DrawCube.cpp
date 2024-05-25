@@ -24,9 +24,10 @@ void DrawCube::framebuffer_size_callback(GLFWwindow *window, int width, int heig
 }
 
 int DrawCube::Draw() {
-
     cout << "绘制贴图" << endl;
+
     auto err = glfwInit();
+
     cout << "init result " << err << endl;
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -57,6 +58,10 @@ int DrawCube::Draw() {
         cout << "failed init glad" << endl;
         return -1;
     }
+
+    int nrAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+    cout << "Support vertex attributes count: " << nrAttributes << endl;
 
     glEnable(GL_DEPTH_TEST);
 
@@ -320,13 +325,11 @@ void DrawCube::processInput(GLFWwindow *window) {
 
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
-void DrawCube::mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
-{
+void DrawCube::mouse_callback(GLFWwindow *window, double xposIn, double yposIn) {
     float xpos = static_cast<float>(xposIn);
     float ypos = static_cast<float>(yposIn);
 
-    if (firstMouse)
-    {
+    if (firstMouse) {
         lastX = xpos;
         lastY = ypos;
         firstMouse = false;
@@ -359,9 +362,8 @@ void DrawCube::mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
-void DrawCube::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-    fov -= (float)yoffset;
+void DrawCube::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
+    fov -= (float) yoffset;
     if (fov < 1.0f)
         fov = 1.0f;
     if (fov > 45.0f)
