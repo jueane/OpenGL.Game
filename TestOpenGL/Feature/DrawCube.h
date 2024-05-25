@@ -23,15 +23,9 @@ public:
     float deltaTime;
     float lastFrame = 0.0f; // 上一帧的时间
 
-    float cameraSpeed = 0.05f;
+    static void mouse_callback(GLFWwindow *window, double xposIn, double yposIn);
 
-    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
-
-    float forwardSpeed = 0.0f;
-    float rightSpeed = 0.0f;
+    static void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
