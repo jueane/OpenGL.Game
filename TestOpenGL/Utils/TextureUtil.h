@@ -8,8 +8,7 @@
 #include <string>
 #include <iostream>
 
-class TextureUtil
-{
+class TextureUtil {
 public:
     unsigned int texture;
 
@@ -17,7 +16,7 @@ public:
 
     unsigned char *data;
 
-    TextureUtil(const char *path);
+    TextureUtil(const char *path, bool hasAlpha);
 
     ~TextureUtil();
 };
