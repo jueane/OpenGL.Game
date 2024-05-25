@@ -3,6 +3,9 @@
 //
 
 #include "DrawTexture.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 DrawTexture::DrawTexture() {
 
@@ -150,6 +153,13 @@ int DrawTexture::Draw() {
     stbi_image_free(data);
 
     shader->Use();
+
+    glm::mat4 trans = glm::mat4(1.0f);
+    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+
+    unsigned int transformLoc = glGetUniformLocation(shader->ID, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
     glUniform1i(glGetUniformLocation(shader->ID, "ourTexture1"), 0);
     glUniform1i(glGetUniformLocation(shader->ID, "texture2"), 1);

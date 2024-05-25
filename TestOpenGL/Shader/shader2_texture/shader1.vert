@@ -2,6 +2,10 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aColor;
 layout (location = 2) in vec2 aTexCoord;
+
+
+uniform mat4 transform;
+
 out vec3 vertexColor;
 out vec2 TexCoord;
 void main()
@@ -10,6 +14,9 @@ void main()
     //    vertexColor = aColor;
 
     gl_Position = vec4(aPos, 1.0);
+
+    gl_Position = transform * gl_Position;
+
     vertexColor = aColor;
     TexCoord = aTexCoord;
 }
