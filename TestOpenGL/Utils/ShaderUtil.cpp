@@ -92,7 +92,7 @@ ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath)
 
 void ShaderUtil::Use()
 {
-    cout << "use shader " << ID << endl;
+//    cout << "use shader " << ID << endl;
     glUseProgram(ID);
 }
 

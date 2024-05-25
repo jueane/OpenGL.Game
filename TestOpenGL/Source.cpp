@@ -1,6 +1,7 @@
 #include "Feature/DrawTriangle.h"
 #include "Feature/DrawTexture.h"
 #include "Feature/TestMatrix.h"
+#include "Feature/DrawCube.h"
 #include "Test/Test1.h"
 
 int main() {
@@ -13,12 +14,14 @@ int main() {
 //    auto drawTriangle = new DrawTriangle();
 //    drawTriangle->Draw();
 
-    auto drawTex = new DrawTexture();
-    drawTex->Draw();
+//    auto drawTex = new DrawTexture();
+//    drawTex->Draw();
 
 //    auto testMatrix = new TestMatrix();
 //    testMatrix->Test1();
 
+    auto drawCube = new DrawCube();
+    drawCube->Draw();
 
     int nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
