@@ -183,40 +183,27 @@ int DrawCubeColor::Draw() {
         projection = glm::perspective(glm::radians(CameraTemp::fov), (float) this->width / this->height, 0.1f, 100.0f);
 
         cubeShader->Use();
-//        auto lightPos = glm::vec3(2, 1, 1);
-        glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+        auto lightPos = glm::vec3(1.2f, 0.5f, 2.0f);
         glm::mat4 cubeModel = glm::mat4(1.0f);
-//        cubeModel = glm::translate(cubeModel, lightPos);
+        cubeModel = glm::rotate(cubeModel, (float) glfwGetTime(), glm::vec3(0, 1, 0));
         cubeShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
         cubeShader->setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         cubeShader->setVec3("lightPos", lightPos);
         cubeShader->setVec3("viewPos", CameraTemp::cameraPos);
-
         cubeShader->setMatrix("model", cubeModel);
         cubeShader->setMatrix("view", view);
         cubeShader->setMatrix("projection", projection);
-
         drawTriangleUtil->Draw();
 
 
         lightShader->Use();
-        lightShader->setMatrix("view", view);
-        lightShader->setMatrix("projection", projection);
         glm::mat4 lightModel = glm::mat4(1.0f);
-        lightModel = glm::translate(cubeModel, lightPos);
+        lightModel = glm::translate(lightModel, lightPos);
         lightModel = glm::scale(lightModel, glm::vec3(0.2));
         lightShader->setMatrix("model", lightModel);
-
-        auto rotInAxis = glm::vec3(0.0f, 0.0f, 0.0f);
-//            cubeModel = glm::rotate(cubeModel, (float) glfwGetTime() * i, rotInAxis);
-
+        lightShader->setMatrix("view", view);
+        lightShader->setMatrix("projection", projection);
         drawTriangleUtil2->Draw();
-
-
-        // 绘制灯立方体对象
-//        glBindVertexArray(lightVAO);
-//        glDrawArrays(GL_TRIANGLES, 0, 36);
-//        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 
         glfwSwapBuffers(window);
