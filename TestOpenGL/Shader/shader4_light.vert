@@ -25,7 +25,9 @@ void main()
 
     vertexColor = aColor;
     TexCoord = aTexCoord;
-    normal = aNormal;
+//    normal = aNormal;
+    normal = mat3(transpose(inverse(model))) * aNormal;
+
 
 
     FragPos = vec3(model * gl_Position);
