@@ -11,10 +11,27 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 class DrawCube {
 public:
     int width = 800;
     int height = 600;
+
+    float deltaTime;
+    float lastFrame = 0.0f; // 上一帧的时间
+
+    float cameraSpeed = 0.05f;
+
+    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
+
+    float forwardSpeed = 0.0f;
+    float rightSpeed = 0.0f;
 
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 

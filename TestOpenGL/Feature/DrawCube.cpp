@@ -5,20 +5,10 @@
 #include "DrawCube.h"
 
 #include "DrawTexture.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 void DrawCube::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     cout << "reset window size" << endl;
     glViewport(0, 0, width, height);
-}
-
-void DrawCube::processInput(GLFWwindow *window) {
-
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, true);
-    }
 }
 
 int DrawCube::Draw() {
@@ -209,6 +199,11 @@ int DrawCube::Draw() {
 
     glfwSwapBuffers(window);
     while (!glfwWindowShouldClose(window)) {
+
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         this->processInput(window);
 
         glClearColor(0.3, 0.3, 0.5, 1);
@@ -230,18 +225,22 @@ int DrawCube::Draw() {
 //        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
         // 摄像机
-        auto cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
+//        cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
         glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 //        auto cameraDirection = glm::normalize(cameraPos - cameraTarget);
         glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 //        glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
 //        glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 
-        auto radius = 30.0f;
-        cameraPos.x = sin(glfwGetTime()) * radius;
-        cameraPos.z = cos(glfwGetTime()) * radius;
+
+// 自动移动摄像机
+//        auto radius = 30.0f;
+//        cameraPos.x = sin(glfwGetTime()) * radius;
+//        cameraPos.z = cos(glfwGetTime()) * radius;
+
         glm::mat4 view;
-        view = glm::lookAt(cameraPos, cameraTarget, up);
+        view = glm::lookAt(cameraPos, cameraPos + cameraFront, up);
+
 
         // 透视矩阵
         glm::mat4 projection = glm::mat4(1.0f);
@@ -283,4 +282,21 @@ int DrawCube::Draw() {
 
     glfwTerminate();
     return 0;
+}
+
+void DrawCube::processInput(GLFWwindow *window) {
+
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window, true);
+    }
+
+    float cameraSpeed = 2.5 * deltaTime; // adjust accordingly
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
