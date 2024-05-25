@@ -19,6 +19,7 @@ public:
     int height = 600;
 
     DrawTriangleUtil *drawTriangleUtil;
+    DrawTriangleUtil *drawTriangleUtil2;
 
     float deltaTime;
     float lastFrame = 0.0f; // 上一帧的时间

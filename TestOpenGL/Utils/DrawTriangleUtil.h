@@ -19,6 +19,8 @@ public:
 
     DrawTriangleUtil(int lenOfVertex, float vertices[], int verticesSize, unsigned int indices[], int indicesSize);
 
+    void Init();
+
     void Draw();
 
     ~DrawTriangleUtil();

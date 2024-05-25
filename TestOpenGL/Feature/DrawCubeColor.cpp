@@ -112,6 +112,7 @@ int DrawCubeColor::Draw() {
 
     drawTriangleUtil = new DrawTriangleUtil(11, vertices, sizeof(vertices), indices, sizeof(indices));
 
+    drawTriangleUtil2 = new DrawTriangleUtil(11, vertices, sizeof(vertices), indices, sizeof(indices));
 
 
     // 使用纹理
@@ -119,15 +120,13 @@ int DrawCubeColor::Draw() {
     auto texture2 = new TextureUtil("resources\\textures\\awesomeface.png", true);
 
 
-    auto shader = new ShaderUtil("Shader\\shader4_light.vert",
-                                 "Shader\\shader4_light.frag");
-
     auto lightShader = new ShaderUtil("Shader\\shader4_light.vert",
-                                      "Shader\\light.frag");
+                                      "Shader\\shader4_light.frag");
 
-    shader->Use();
-    shader->setInt("ourTexture1", 0);
-    shader->setInt("texture2", 1);
+    auto cubeShader = new ShaderUtil("Shader\\shader4_cube.vert",
+                                     "Shader\\shader4_cube.frag");
+
+    cubeShader->Use();
 
     glm::vec3 cubePositions[] = {
             glm::vec3(0.0f, 0.0f, 0.0f),
@@ -150,7 +149,7 @@ int DrawCubeColor::Draw() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-        drawTriangleUtil->Draw();
+//        drawTriangleUtil->Draw();
 
         glActiveTexture(GL_TEXTURE0); // 在绑定纹理之前先激活纹理单元
         glBindTexture(GL_TEXTURE_2D, texture->texture);
@@ -160,8 +159,8 @@ int DrawCubeColor::Draw() {
 
 
         // 模型矩阵:放倒
-//        glm::mat4 lightModel = glm::mat4(1.0f);
-//        lightModel = glm::rotate(lightModel, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+//        glm::mat4 cubeModel = glm::mat4(1.0f);
+//        cubeModel = glm::rotate(cubeModel, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
         // 观察矩阵
 //        glm::mat4 view = glm::mat4(1.0f);
@@ -183,62 +182,35 @@ int DrawCubeColor::Draw() {
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(CameraTemp::fov), (float) this->width / this->height, 0.1f, 100.0f);
 
-        shader->Use();
-        shader->setMatrix("view", view);
-        shader->setMatrix("projection", projection);
+        cubeShader->Use();
+//        auto lightPos = glm::vec3(2, 1, 1);
+        glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+        glm::mat4 cubeModel = glm::mat4(1.0f);
+//        cubeModel = glm::translate(cubeModel, lightPos);
+        cubeShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        cubeShader->setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+        cubeShader->setVec3("lightPos", lightPos);
+        cubeShader->setVec3("viewPos", CameraTemp::cameraPos);
 
-        shader->setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-        shader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        cubeShader->setMatrix("model", cubeModel);
+        cubeShader->setMatrix("view", view);
+        cubeShader->setMatrix("projection", projection);
 
-        shader->setVec3("viewPos", CameraTemp::cameraPos);
+        drawTriangleUtil->Draw();
 
-        auto lightPos = glm::vec3(2, 2, 0);
-        shader->setVec3("lightPos", lightPos);
-
-
-        for (int i = 10; i > 0; i--) {
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::scale(model, glm::vec3(0.2f * (i + 1), 0.2f * (i + 1), 0.2f * (i + 1)));
-            model = glm::translate(model, cubePositions[i]);
-
-            auto rotInAxis = glm::vec3(0.0f, 0.0f, 0.0f);
-            auto aa = i % 3;
-            if (aa == 0) {
-                rotInAxis.x = 1.0f;
-            } else if (aa == 1) {
-                rotInAxis.y = 1.0f;
-            } else {
-                rotInAxis.z = 1.0f;
-            }
-//            lightModel = glm::rotate(lightModel, (float) glfwGetTime() * i, rotInAxis);
-
-            shader->setMatrix("model", model);
-            glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-        }
-
-//        drawTriangleUtil->Draw();
 
         lightShader->Use();
-
-        glm::mat4 lightModel = glm::mat4(1.0f);
-        lightModel = glm::translate(lightModel, lightPos);
-        lightShader->setMatrix("model", lightModel);
         lightShader->setMatrix("view", view);
         lightShader->setMatrix("projection", projection);
-        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+        glm::mat4 lightModel = glm::mat4(1.0f);
+        lightModel = glm::translate(cubeModel, lightPos);
+        lightModel = glm::scale(lightModel, glm::vec3(0.2));
+        lightShader->setMatrix("model", lightModel);
 
+        auto rotInAxis = glm::vec3(0.0f, 0.0f, 0.0f);
+//            cubeModel = glm::rotate(cubeModel, (float) glfwGetTime() * i, rotInAxis);
 
-        // 灯光
-//        unsigned int lightVAO;
-//        glGenVertexArrays(1, &lightVAO);
-//        glBindVertexArray(lightVAO);
-//        // 只需要绑定VBO不用再次设置VBO的数据，因为箱子的VBO数据中已经包含了正确的立方体顶点数据
-//        unsigned int VBO;
-//        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-//        // 设置灯立方体的顶点属性（对我们的灯来说仅仅只有位置数据）
-//        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
-//        glEnableVertexAttribArray(0);
-
+        drawTriangleUtil2->Draw();
 
 
         // 绘制灯立方体对象
