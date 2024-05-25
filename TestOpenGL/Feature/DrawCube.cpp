@@ -194,6 +194,19 @@ int DrawCube::Draw() {
 
 //    shader->setInt("textur2",1);
 
+    glm::vec3 cubePositions[] = {
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(2.0f, 5.0f, -15.0f),
+            glm::vec3(-1.5f, -2.2f, -2.5f),
+            glm::vec3(-3.8f, -2.0f, -12.3f),
+            glm::vec3(2.4f, -0.4f, -3.5f),
+            glm::vec3(-1.7f, 3.0f, -7.5f),
+            glm::vec3(1.3f, -2.0f, -2.5f),
+            glm::vec3(1.5f, 2.0f, -2.5f),
+            glm::vec3(1.5f, 0.2f, -1.5f),
+            glm::vec3(-1.3f, 1.0f, -1.5f)
+    };
+
     glfwSwapBuffers(window);
     while (!glfwWindowShouldClose(window)) {
         this->processInput(window);
@@ -208,8 +221,8 @@ int DrawCube::Draw() {
         glBindTexture(GL_TEXTURE_2D, texture2);
 
         // 模型矩阵:放倒
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+//        glm::mat4 model = glm::mat4(1.0f);
+//        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
         // 观察矩阵
         glm::mat4 view = glm::mat4(1.0f);
@@ -219,30 +232,31 @@ int DrawCube::Draw() {
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), (float) this->width / this->height, 0.1f, 100.0f);
 
-        glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+//        glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(glGetUniformLocation(shader->ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-        // 位移和旋转
-        glm::mat4 trans = glm::mat4(1.0f);
-        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-        trans = glm::rotate(trans, (float) glfwGetTime(), glm::vec3(0.0, 0.0, 1.0));
 
-        trans = model * trans;
+        for (int i = 0; i < 10; i++) {
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::scale(model, glm::vec3(0.2f * (i + 1), 0.2f * (i + 1), 0.2f * (i + 1)));
+            model = glm::translate(model, cubePositions[i]);
 
-        unsigned int transformLoc = glGetUniformLocation(shader->ID, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+            auto rotInAxis = glm::vec3(0.0f, 0.0f, 0.0f);
+            auto aa = i % 3;
+            if (aa == 0) {
+                rotInAxis.x = 1.0f;
+            } else if (aa == 1) {
+                rotInAxis.y = 1.0f;
+            } else {
+                rotInAxis.z = 1.0f;
+            }
+            model = glm::rotate(model, (float) glfwGetTime() * i, rotInAxis);
 
+            glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+            glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+        }
 
-        //renderer
-//        glUseProgram(shaderProgram);
-
-        //float timeValue = glfwGetTime();
-        //float greenValue = (sin(timeValue) / 2) + 0.5;
-        //int vertexColorLocation = glGetUniformLocation(shaderProgram, "outColor");
-        //glUniform4f(vertexColorLocation, 1-greenValue, greenValue, 0, 1);
-
-        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
