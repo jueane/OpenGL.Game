@@ -187,10 +187,8 @@ int DrawCube::Draw() {
                                  "Shader\\shader2_cube\\shader1.frag");
     shader->Use();
 
-    glUniform1i(glGetUniformLocation(shader->ID, "ourTexture1"), 0);
-    glUniform1i(glGetUniformLocation(shader->ID, "texture2"), 1);
-
-//    shader->setInt("textur2",1);
+    shader->setInt("ourTexture1",0);
+    shader->setInt("texture2",1);
 
     glm::vec3 cubePositions[] = {
             glm::vec3(0.0f, 0.0f, 0.0f),
@@ -249,9 +247,9 @@ int DrawCube::Draw() {
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(CameraTemp::fov), (float) this->width / this->height, 0.1f, 100.0f);
 
-//        glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(glGetUniformLocation(shader->ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
-        glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+//        shader->setMatrix("model", model);
+        shader->setMatrix("view", view);
+        shader->setMatrix("projection", projection);
 
 
         for (int i = 10; i > 0; i--) {
@@ -270,7 +268,7 @@ int DrawCube::Draw() {
             }
 //            model = glm::rotate(model, (float) glfwGetTime() * i, rotInAxis);
 
-            glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+            shader->setMatrix("model", model);
             glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
         }
 

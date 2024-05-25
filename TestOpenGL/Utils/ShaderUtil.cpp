@@ -1,12 +1,9 @@
 #include "ShaderUtil.h"
 
-ShaderUtil::ShaderUtil()
-{
-    cout << "hi...." << endl;
+ShaderUtil::ShaderUtil() {
 }
 
-ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath)
-{
+ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath) {
     cout << "Compile shader ..." << endl;
     string vertexCode;
     string fragCode;
@@ -16,8 +13,7 @@ ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath)
     cout << "fragment path: " << fragmentPath;
     vShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
     fShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
-    try
-    {
+    try {
         vShaderFile.open(vertexPath);
         fShaderFile.open(fragmentPath);
         stringstream vStream;
@@ -52,8 +48,7 @@ ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath)
     glCompileShader(vertex);
     // 打印编译错误
     glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
+    if (!success) {
         glGetShaderInfoLog(vertex, 512, nullptr, infoLog);
         cout << "ShaderUtil compile error in vertex. " << infoLog << endl;
     }
@@ -64,8 +59,7 @@ ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath)
     glCompileShader(fragment);
     // 打印编译错误
     glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
+    if (!success) {
         glGetShaderInfoLog(fragment, 512, nullptr, infoLog);
         cout << "ShaderUtil compile error in fragment. " << infoLog << endl;
     }
@@ -78,8 +72,7 @@ ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath)
     glLinkProgram(ID);
     // 打印链接错误
     glGetProgramiv(ID, GL_LINK_STATUS, &success);
-    if (!success)
-    {
+    if (!success) {
         glGetProgramInfoLog(ID, 512, nullptr, infoLog);
         cout << "ShaderUtil link error in. " << infoLog << endl;
     }
@@ -90,23 +83,23 @@ ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath)
     glDeleteShader(fragment);
 }
 
-void ShaderUtil::Use()
-{
+void ShaderUtil::Use() {
 //    cout << "use shader " << ID << endl;
     glUseProgram(ID);
 }
 
-void ShaderUtil::setBool(const string &name, bool value) const
-{
-    glUniform1i(glad_glGetUniformLocation(ID, name.c_str()), (int) value);
+void ShaderUtil::setBool(const string &name, bool value) const {
+    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int) value);
 }
 
-void ShaderUtil::setInt(const string &name, int value) const
-{
-    glUniform1i(glad_glGetUniformLocation(ID, name.c_str()), value);
+void ShaderUtil::setInt(const string &name, int value) const {
+    glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 }
 
-void ShaderUtil::setFloat(const string &name, float value) const
-{
+void ShaderUtil::setFloat(const string &name, float value) const {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+}
+
+void ShaderUtil::setMatrix(const string &name, glm::mat4 mat4) {
+    glUniformMatrix4fv(glGetUniformLocation(this->ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat4));
 }

@@ -158,8 +158,8 @@ int DrawTexture::Draw() {
 
     shader->Use();
 
-    glUniform1i(glGetUniformLocation(shader->ID, "ourTexture1"), 0);
-    glUniform1i(glGetUniformLocation(shader->ID, "texture2"), 1);
+    shader->setInt("ourTexture1",0);
+    shader->setInt("texture2",1);
 
 
     glActiveTexture(GL_TEXTURE0); // 在绑定纹理之前先激活纹理单元
@@ -167,8 +167,6 @@ int DrawTexture::Draw() {
 
     glActiveTexture(GL_TEXTURE1); // 在绑定纹理之前先激活纹理单元
     glBindTexture(GL_TEXTURE_2D, texture2);
-
-//    shader->setInt("textur2",1);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glfwSwapBuffers(window);
@@ -190,9 +188,9 @@ int DrawTexture::Draw() {
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), (float) this->width / this->height, 0.1f, 100.0f);
 
-        glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(glGetUniformLocation(shader->ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
-        glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        shader->setMatrix("model", model);
+        shader->setMatrix("view", view);
+        shader->setMatrix("projection", projection);
 
         // 位移和旋转
         glm::mat4 trans = glm::mat4(1.0f);
@@ -201,17 +199,8 @@ int DrawTexture::Draw() {
 
         trans = model * trans;
 
-        unsigned int transformLoc = glGetUniformLocation(shader->ID, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+        shader->setMatrix("transform", trans);
 
-
-        //renderer
-//        glUseProgram(shaderProgram);
-
-        //float timeValue = glfwGetTime();
-        //float greenValue = (sin(timeValue) / 2) + 0.5;
-        //int vertexColorLocation = glGetUniformLocation(shaderProgram, "outColor");
-        //glUniform4f(vertexColorLocation, 1-greenValue, greenValue, 0, 1);
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);

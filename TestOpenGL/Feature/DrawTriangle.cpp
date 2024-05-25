@@ -101,21 +101,12 @@ int DrawTriangle::Draw() {
     while (!glfwWindowShouldClose(window)) {
         this->processInput(window);
 
-        //glClearColor(0.3, 0.3, 0.5, 1);
-        //glClear(GL_COLOR_BUFFER_BIT);
-
-        //renderer
-//        glUseProgram(shaderProgram);
-
-        //float timeValue = glfwGetTime();
-        //float greenValue = (sin(timeValue) / 2) + 0.5;
-        //int vertexColorLocation = glGetUniformLocation(shaderProgram, "outColor");
-        //glUniform4f(vertexColorLocation, 1-greenValue, greenValue, 0, 1);
+        glClearColor(0.3, 0.3, 0.5, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glfwSwapBuffers(window);
 
-        //glfwSwapBuffers(window);
+        glfwSwapBuffers(window);
         glfwPollEvents();
     }
     glfwTerminate();
