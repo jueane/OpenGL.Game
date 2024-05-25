@@ -1,5 +1,6 @@
 #include "Feature/DrawTriangle.h"
 #include "Feature/DrawTexture.h"
+#include "Feature/TestMatrix.h"
 #include "Test/Test1.h"
 
 int main() {
@@ -14,6 +15,9 @@ int main() {
 
     auto drawTex = new DrawTexture();
     drawTex->Draw();
+
+//    auto testMatrix = new TestMatrix();
+//    testMatrix->Test1();
 
 
     int nrAttributes;
