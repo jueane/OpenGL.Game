@@ -29,6 +29,10 @@ public:
 
     void setFloat(const string &name, float value) const;
 
+    void setVec3(const string &name, float a, float b, float c);
+
+    void setVec3(const string &name, glm::vec3 vec3);
+
     void setMatrix(const string &name, glm::mat4 mat4);
 };
 

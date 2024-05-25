@@ -100,6 +100,14 @@ void ShaderUtil::setFloat(const string &name, float value) const {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
+void ShaderUtil::setVec3(const string &name, float a, float b, float c) {
+    glUniform3fv(glGetUniformLocation(this->ID, name.c_str()), 1, glm::value_ptr(glm::vec3(a, b, c)));
+}
+
+void ShaderUtil::setVec3(const string &name, glm::vec3 vec3) {
+    glUniform3fv(glGetUniformLocation(this->ID, name.c_str()), 1, glm::value_ptr(vec3));
+}
+
 void ShaderUtil::setMatrix(const string &name, glm::mat4 mat4) {
     glUniformMatrix4fv(glGetUniformLocation(this->ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat4));
 }

@@ -11,8 +11,15 @@ public:
     unsigned int VAO;
     unsigned int VBO;
     unsigned int EBO;
+    int lenOfVertex;
+    float *vertices;
+    int verticesSize;
+    unsigned int *indices;
+    int indicesSize;
 
     DrawTriangleUtil(int lenOfVertex, float vertices[], int verticesSize, unsigned int indices[], int indicesSize);
+
+    void Draw();
 
     ~DrawTriangleUtil();
 };

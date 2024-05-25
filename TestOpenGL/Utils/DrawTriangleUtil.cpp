@@ -7,6 +7,24 @@
 
 DrawTriangleUtil::DrawTriangleUtil(int lenOfVertex, float vertices[], int verticesSize, unsigned int indices[],
                                    int indicesSize) {
+
+    this->lenOfVertex = lenOfVertex;
+    this->vertices = vertices;
+    this->verticesSize = verticesSize;
+    this->indices = indices;
+    this->indicesSize = indicesSize;
+
+    this->Draw();
+}
+
+DrawTriangleUtil::~DrawTriangleUtil() {
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
+}
+
+void DrawTriangleUtil::Draw() {
+
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -30,10 +48,4 @@ DrawTriangleUtil::DrawTriangleUtil(int lenOfVertex, float vertices[], int vertic
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, lenOfVertex * sizeof(float), (void *) (6 * sizeof(float)));
         glEnableVertexAttribArray(2);
     }
-}
-
-DrawTriangleUtil::~DrawTriangleUtil() {
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
 }
