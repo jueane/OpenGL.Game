@@ -220,13 +220,28 @@ int DrawCube::Draw() {
         glActiveTexture(GL_TEXTURE1); // 在绑定纹理之前先激活纹理单元
         glBindTexture(GL_TEXTURE_2D, texture2);
 
+
         // 模型矩阵:放倒
 //        glm::mat4 model = glm::mat4(1.0f);
 //        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
         // 观察矩阵
-        glm::mat4 view = glm::mat4(1.0f);
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+//        glm::mat4 view = glm::mat4(1.0f);
+//        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+        // 摄像机
+        auto cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
+        glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+//        auto cameraDirection = glm::normalize(cameraPos - cameraTarget);
+        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+//        glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+//        glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+
+        auto radius = 30.0f;
+        cameraPos.x = sin(glfwGetTime()) * radius;
+        cameraPos.z = cos(glfwGetTime()) * radius;
+        glm::mat4 view;
+        view = glm::lookAt(cameraPos, cameraTarget, up);
 
         // 透视矩阵
         glm::mat4 projection = glm::mat4(1.0f);
@@ -237,7 +252,7 @@ int DrawCube::Draw() {
         glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 10; i > 0; i--) {
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::scale(model, glm::vec3(0.2f * (i + 1), 0.2f * (i + 1), 0.2f * (i + 1)));
             model = glm::translate(model, cubePositions[i]);
@@ -251,7 +266,7 @@ int DrawCube::Draw() {
             } else {
                 rotInAxis.z = 1.0f;
             }
-            model = glm::rotate(model, (float) glfwGetTime() * i, rotInAxis);
+//            model = glm::rotate(model, (float) glfwGetTime() * i, rotInAxis);
 
             glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
             glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
