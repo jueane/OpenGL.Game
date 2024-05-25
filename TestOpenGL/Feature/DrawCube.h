@@ -10,26 +10,20 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 #include <stb_image.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "CameraTemp.h"
 
 class DrawCube {
 public:
     int width = 800;
     int height = 600;
 
-    float deltaTime;
-    float lastFrame = 0.0f; // 上一帧的时间
+//    static void mouse_callback(GLFWwindow *window, double xposIn, double yposIn);
 
-    static void mouse_callback(GLFWwindow *window, double xposIn, double yposIn);
-
-    static void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
+//    static void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
-    void processInput(GLFWwindow *window);
+//    void processInput(GLFWwindow *window);
 
     int Draw();
 };

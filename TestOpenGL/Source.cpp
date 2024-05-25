@@ -2,23 +2,16 @@
 #include "Feature/DrawTexture.h"
 #include "Feature/TestMatrix.h"
 #include "Feature/DrawCube.h"
+#include "Feature/DrawCubeColor.h"
 #include "Test/Test1.h"
 
 int main() {
-//    auto test1 = new Test1();
-//    test1->Test();
-
-//    auto drawTriangle = new DrawTriangle();
-//    drawTriangle->Draw();
-
-//    auto drawTex = new DrawTexture();
-//    drawTex->Draw();
-
-//    auto testMatrix = new TestMatrix();
-//    testMatrix->Test1();
-
-    auto drawCube = new DrawCube();
-    drawCube->Draw();
+//    (new Test1())->Test();
+//    (new DrawTriangle())->Draw();
+//    (new DrawTexture())->Draw();
+//    (new TestMatrix())->Test1();
+//    (new DrawCube())->Draw();
+    (new DrawCubeColor())->Draw();
 
     return 0;
 }

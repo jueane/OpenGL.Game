@@ -2,14 +2,14 @@
 // Created by Administrator on 2024/5/25.
 //
 
-#include "DrawCube.h"
+#include "DrawCubeColor.h"
 
-void DrawCube::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+void DrawCubeColor::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     cout << "reset window size" << endl;
     glViewport(0, 0, width, height);
 }
 
-int DrawCube::Draw() {
+int DrawCubeColor::Draw() {
     cout << "绘制贴图" << endl;
 
     auto err = glfwInit();
@@ -33,7 +33,7 @@ int DrawCube::Draw() {
     }
 
     glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, DrawCube::framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(window, DrawCubeColor::framebuffer_size_callback);
 
     glfwSetCursorPosCallback(window, CameraTemp::mouse_callback);
     glfwSetScrollCallback(window, CameraTemp::scroll_callback);
