@@ -1,4 +1,5 @@
 #include "Feature/DrawTriangle.h"
+#include "Feature/DrawQuadrilateral.h"
 #include "Feature/DrawTexture.h"
 #include "Feature/TestMatrix.h"
 #include "Feature/DrawCube.h"
@@ -7,7 +8,7 @@
 
 int main() {
 //    (new Test1())->Test();
-//    (new DrawTriangle())->Draw();
+//    (new DrawQuadrilateral())->Draw();
 //    (new DrawTexture())->Draw();
 //    (new TestMatrix())->Test1();
 //    (new DrawCube())->Draw();
