@@ -11,11 +11,14 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 #include "CameraTemp.h"
+#include "DrawTriangleUtil.h"
 
 class DrawCube {
 public:
     int width = 800;
     int height = 600;
+
+    DrawTriangleUtil *drawTriangleUtil;
 
 //    static void mouse_callback(GLFWwindow *window, double xposIn, double yposIn);
 

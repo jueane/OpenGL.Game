@@ -10,6 +10,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 #include <stb_image.h>
+#include "DrawTriangleUtil.h"
 
 using namespace std;
 
@@ -17,6 +18,8 @@ class DrawTexture {
 public:
     int width;
     int height;
+
+    DrawTriangleUtil *drawTriangleUtil;
 
     DrawTexture();
 

@@ -8,7 +8,7 @@ add_executable(TestOpenGL
         TestOpenGL/Utils/ShaderUtil.cpp
         TestOpenGL/Feature/DrawTriangle.cpp
         TestOpenGL/Utils/TextureUtil.cpp
-        TestOpenGL/std_image_impl.h TestOpenGL/Feature/DrawTexture.cpp TestOpenGL/Feature/DrawTexture.h TestOpenGL/Feature/ImageLoader.cpp TestOpenGL/Feature/ImageLoader.h TestOpenGL/Feature/TestMatrix.cpp TestOpenGL/Feature/TestMatrix.h TestOpenGL/Feature/DrawCube.cpp TestOpenGL/Feature/DrawCube.h TestOpenGL/Feature/Camera.h TestOpenGL/Feature/DrawCubeColor.cpp TestOpenGL/Feature/DrawCubeColor.h TestOpenGL/Feature/CameraTemp.h TestOpenGL/Feature/CameraTemp.cpp)
+        TestOpenGL/std_image_impl.h TestOpenGL/Feature/DrawTexture.cpp TestOpenGL/Feature/DrawTexture.h TestOpenGL/Feature/ImageLoader.cpp TestOpenGL/Feature/ImageLoader.h TestOpenGL/Feature/TestMatrix.cpp TestOpenGL/Feature/TestMatrix.h TestOpenGL/Feature/DrawCube.cpp TestOpenGL/Feature/DrawCube.h TestOpenGL/Feature/Camera.h TestOpenGL/Feature/DrawCubeColor.cpp TestOpenGL/Feature/DrawCubeColor.h TestOpenGL/Feature/CameraTemp.h TestOpenGL/Feature/CameraTemp.cpp TestOpenGL/Feature/DrawTriangleUtil.cpp TestOpenGL/Feature/DrawTriangleUtil.h)
 
 target_include_directories(TestOpenGL PUBLIC ${PROJECT_SOURCE_DIR}/Ref/Include/)
 

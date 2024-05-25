@@ -3,6 +3,7 @@
 //
 
 #include "DrawCubeColor.h"
+#include "DrawTriangleUtil.h"
 
 void DrawCubeColor::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     cout << "reset window size" << endl;
@@ -109,31 +110,7 @@ int DrawCubeColor::Draw() {
             33, 34, 35
     };
 
-
-    unsigned int VAO;
-    unsigned int VBO;
-    unsigned int EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) 0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    // texture coord attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+    drawTriangleUtil = new DrawTriangleUtil(8, vertices, sizeof(vertices), indices, sizeof(indices));
 
 
     // 使用纹理
@@ -193,11 +170,6 @@ int DrawCubeColor::Draw() {
 //        glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 
 
-// 自动移动摄像机
-//        auto radius = 30.0f;
-//        cameraPos.x = sin(glfwGetTime()) * radius;
-//        cameraPos.z = cos(glfwGetTime()) * radius;
-
         glm::mat4 view;
         view = glm::lookAt(CameraTemp::cameraPos, CameraTemp::cameraPos + CameraTemp::cameraFront, up);
 
@@ -236,9 +208,7 @@ int DrawCubeColor::Draw() {
         glfwPollEvents();
     }
 
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+    delete drawTriangleUtil;
 
     glfwTerminate();
     return 0;

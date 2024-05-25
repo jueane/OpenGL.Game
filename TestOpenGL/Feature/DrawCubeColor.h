@@ -11,11 +11,14 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 #include "CameraTemp.h"
+#include "DrawTriangleUtil.h"
 
 class DrawCubeColor {
 public:
     int width = 800;
     int height = 600;
+
+    DrawTriangleUtil *drawTriangleUtil;
 
     float deltaTime;
     float lastFrame = 0.0f; // 上一帧的时间

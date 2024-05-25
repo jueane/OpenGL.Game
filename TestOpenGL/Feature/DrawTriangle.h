@@ -9,6 +9,7 @@
 #include "../Utils/ShaderUtil.h"
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include "DrawTriangleUtil.h"
 
 using namespace std;
 
@@ -16,6 +17,8 @@ class DrawTriangle
 {
 public:
     DrawTriangle();
+
+    DrawTriangleUtil *drawTriangleUtil;
 
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
