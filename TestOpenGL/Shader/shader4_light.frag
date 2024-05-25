@@ -17,8 +17,6 @@ out vec4 FragColor;
 void main()
 {
     //        FragColor = mix(texture(ourTexture1, TexCoord), texture(texture2, TexCoord), 0.5);
-    //    FragColor = objectColor * lightColor;
-    //    FragColor.w=1.0f;
 
     float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * lightColor;

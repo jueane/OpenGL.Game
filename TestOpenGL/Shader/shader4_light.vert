@@ -25,8 +25,8 @@ void main()
 
     vertexColor = aColor;
     TexCoord = aTexCoord;
-    normal= aNormal;
+    normal = aNormal;
 
 
-    FragPos = vec3(model * vec4(aPos, 1.0));
+    FragPos = vec3(model * gl_Position);
 }
