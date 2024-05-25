@@ -51,16 +51,66 @@ int DrawCube::Draw() {
         return -1;
     }
 
+    glEnable(GL_DEPTH_TEST);
+
     float vertices[] = {
-            0.5f, 0.5f, 0.0f, 1, 0, 0, 1.0f, 1.0f,    // 右上角
-            0.5f, -0.5f, 0.0f, 0, 1, 0, 1.0f, 0.0f,    // 右下角
-            -0.4f, -0.5f, 0.0f, 0, 0, 1, 0.0f, 0.0f, // 左下角
-            -0.5f, 0.5f, 0.0f, 1, 0, 0, 0.0f, 1.0f  // 左上角
+            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, 0, 1, 0, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 0, 0, 1, 1.0f, 1.0f,
+            0.5f, 0.5f, -0.5f, 1, 0, 0, 1.0f, 1.0f,
+            -0.5f, 0.5f, -0.5f, 0, 1, 0, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 0.0f,
+
+            -0.5f, -0.5f, 0.5f, 1, 0, 0, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 0, 1, 0, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.5f, 0, 1, 0, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0, 0, 1, 0.0f, 0.0f,
+
+            -0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
+
+            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
+
+            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
+            -0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f,
+
+            -0.5f, 0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
+            0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f
+    };
+    unsigned int indices[] = {
+            0, 1, 2,
+            3, 4, 5,
+            6, 7, 8,
+            9, 10, 11,
+            12, 13, 14,
+            15, 16, 17,
+            18, 19, 20,
+            21, 22, 23,
+            24, 25, 26,
+            27, 28, 29,
+            30, 31, 32,
+            33, 34, 35
     };
 
-    unsigned int indices[] = {
-            0, 1, 3,
-            1, 2, 3};
 
     unsigned int VAO;
     unsigned int VBO;
@@ -144,13 +194,12 @@ int DrawCube::Draw() {
 
 //    shader->setInt("textur2",1);
 
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glfwSwapBuffers(window);
     while (!glfwWindowShouldClose(window)) {
         this->processInput(window);
 
         glClearColor(0.3, 0.3, 0.5, 1);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glActiveTexture(GL_TEXTURE0); // 在绑定纹理之前先激活纹理单元
         glBindTexture(GL_TEXTURE_2D, texture);
@@ -193,7 +242,7 @@ int DrawCube::Draw() {
         //int vertexColorLocation = glGetUniformLocation(shaderProgram, "outColor");
         //glUniform4f(vertexColorLocation, 1-greenValue, greenValue, 0, 1);
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
