@@ -117,8 +117,8 @@ int DrawCube::Draw() {
     auto texture2 = new TextureUtil("resources\\textures\\awesomeface.png", true);
 
 
-    auto shader = new ShaderUtil("Shader\\shader2_cube\\shader1.vert",
-                                 "Shader\\shader2_cube\\shader1.frag");
+    auto shader = new ShaderUtil("Shader\\shader3_cube.vert",
+                                 "Shader\\shader3_cube.frag");
     shader->Use();
 
     shader->setInt("ourTexture1", 0);

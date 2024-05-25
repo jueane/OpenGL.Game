@@ -24,7 +24,6 @@ DrawTriangleUtil::~DrawTriangleUtil() {
 }
 
 void DrawTriangleUtil::Draw() {
-
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -47,5 +46,10 @@ void DrawTriangleUtil::Draw() {
         // texture coord attribute
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, lenOfVertex * sizeof(float), (void *) (6 * sizeof(float)));
         glEnableVertexAttribArray(2);
+    }
+    if (lenOfVertex >= 11) {
+        // texture coord attribute
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, lenOfVertex * sizeof(float), (void *) (8 * sizeof(float)));
+        glEnableVertexAttribArray(3);
     }
 }

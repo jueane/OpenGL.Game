@@ -53,47 +53,47 @@ int DrawCubeColor::Draw() {
     glEnable(GL_DEPTH_TEST);
 
     float vertices[] = {
-            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f, 0, 1, 0, 1.0f, 0.0f,
-            0.5f, 0.5f, -0.5f, 0, 0, 1, 1.0f, 1.0f,
-            0.5f, 0.5f, -0.5f, 1, 0, 0, 1.0f, 1.0f,
-            -0.5f, 0.5f, -0.5f, 0, 1, 0, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
+            0.5f, -0.5f, -0.5f, 0, 1, 0, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
+            0.5f, 0.5f, -0.5f, 0, 0, 1, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
+            0.5f, 0.5f, -0.5f, 1, 0, 0, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
+            -0.5f, 0.5f, -0.5f, 0, 1, 0, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f,
+            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
 
-            -0.5f, -0.5f, 0.5f, 1, 0, 0, 0.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 0, 1, 0, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 1.0f,
-            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 1.0f,
-            -0.5f, 0.5f, 0.5f, 0, 1, 0, 0.0f, 1.0f,
-            -0.5f, -0.5f, 0.5f, 0, 0, 1, 0.0f, 0.0f,
+            -0.5f, -0.5f, 0.5f, 1, 0, 0, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 0, 1, 0, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f, 0.5f, 0.5f, 0, 1, 0, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0, 0, 1, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
 
-            -0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
-            -0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 
-            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
-            0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
-            0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
-            0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 
-            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
-            0.5f, -0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+            -0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
 
-            -0.5f, 0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
-            0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
-            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f
+            -0.5f, 0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f
     };
     unsigned int indices[] = {
             0, 1, 2,
@@ -110,7 +110,7 @@ int DrawCubeColor::Draw() {
             33, 34, 35
     };
 
-    drawTriangleUtil = new DrawTriangleUtil(8, vertices, sizeof(vertices), indices, sizeof(indices));
+    drawTriangleUtil = new DrawTriangleUtil(11, vertices, sizeof(vertices), indices, sizeof(indices));
 
 
 
@@ -119,10 +119,10 @@ int DrawCubeColor::Draw() {
     auto texture2 = new TextureUtil("resources\\textures\\awesomeface.png", true);
 
 
-    auto shader = new ShaderUtil("Shader\\shader3.vert",
-                                 "Shader\\shader3.frag");
+    auto shader = new ShaderUtil("Shader\\shader4_light.vert",
+                                 "Shader\\shader4_light.frag");
 
-    auto lightShader = new ShaderUtil("Shader\\shader3.vert",
+    auto lightShader = new ShaderUtil("Shader\\shader4_light.vert",
                                       "Shader\\light.frag");
 
     shader->Use();
@@ -190,6 +190,9 @@ int DrawCubeColor::Draw() {
         shader->setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         shader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
+        auto lightPos = glm::vec3(2, 2, 0);
+        shader->setVec3("lightPos", lightPos);
+
 
         for (int i = 10; i > 0; i--) {
             glm::mat4 model = glm::mat4(1.0f);
@@ -216,7 +219,7 @@ int DrawCubeColor::Draw() {
         lightShader->Use();
 
         glm::mat4 lightModel = glm::mat4(1.0f);
-        lightModel= glm::translate(lightModel, glm::vec3(2,2,0));
+        lightModel = glm::translate(lightModel, lightPos);
         lightShader->setMatrix("model", lightModel);
         lightShader->setMatrix("view", view);
         lightShader->setMatrix("projection", projection);

@@ -57,8 +57,8 @@ int DrawTexture::Draw() {
 
     glViewport(0, 0, 800, 600);
     glfwSetFramebufferSizeCallback(window, DrawTexture::framebuffer_size_callback);
-    auto shader = new ShaderUtil("Shader\\shader2_texture\\shader1.vert",
-                                 "Shader\\shader2_texture\\shader1.frag");
+    auto shader = new ShaderUtil("Shader\\shader2_texture.vert",
+                                 "Shader\\shader2_texture.frag");
 
     float vertices[] = {
             0.5f, 0.5f, 0.0f, 1, 0, 0, 1.0f, 1.0f,    // 右上角
