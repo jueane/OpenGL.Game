@@ -3,7 +3,7 @@
 //
 
 #include "DrawTriangleUtil.h"
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 DrawTriangleUtil::DrawTriangleUtil(int lenOfVertex, float vertices[], int verticesSize, unsigned int indices[],
                                    int indicesSize) {

@@ -11,7 +11,7 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 #include "CameraTemp.h"
-#include "DrawTriangleUtil.h"
+#include "../Utils/DrawTriangleUtil.h"
 
 class DrawCubeColor {
 public:

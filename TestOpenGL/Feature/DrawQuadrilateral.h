@@ -9,7 +9,7 @@
 #include "../Utils/ShaderUtil.h"
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
-#include "DrawTriangleUtil.h"
+#include "../Utils/DrawTriangleUtil.h"
 
 
 using namespace std;

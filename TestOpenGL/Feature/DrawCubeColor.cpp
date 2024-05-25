@@ -3,7 +3,7 @@
 //
 
 #include "DrawCubeColor.h"
-#include "DrawTriangleUtil.h"
+#include "../Utils/DrawTriangleUtil.h"
 
 void DrawCubeColor::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     cout << "reset window size" << endl;
