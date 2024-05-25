@@ -154,13 +154,6 @@ int DrawTexture::Draw() {
 
     shader->Use();
 
-    glm::mat4 trans = glm::mat4(1.0f);
-    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
-
-    unsigned int transformLoc = glGetUniformLocation(shader->ID, "transform");
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
-
     glUniform1i(glGetUniformLocation(shader->ID, "ourTexture1"), 0);
     glUniform1i(glGetUniformLocation(shader->ID, "texture2"), 1);
 
@@ -178,8 +171,17 @@ int DrawTexture::Draw() {
     while (!glfwWindowShouldClose(window)) {
         this->processInput(window);
 
-        //glClearColor(0.3, 0.3, 0.5, 1);
-        //glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.3, 0.3, 0.5, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+
+        // 位移和旋转
+        glm::mat4 trans = glm::mat4(1.0f);
+        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+        trans = glm::rotate(trans, (float) glfwGetTime(), glm::vec3(0.0, 0.0, 1.0));
+        unsigned int transformLoc = glGetUniformLocation(shader->ID, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
 
         //renderer
 //        glUseProgram(shaderProgram);
@@ -192,7 +194,6 @@ int DrawTexture::Draw() {
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
 
-        //glfwSwapBuffers(window);
         glfwPollEvents();
     }
     glfwTerminate();
