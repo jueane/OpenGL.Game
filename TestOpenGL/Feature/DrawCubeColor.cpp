@@ -145,7 +145,7 @@ int DrawCubeColor::Draw() {
     while (!glfwWindowShouldClose(window)) {
         CameraTemp::processInput(window);
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1);
+        glClearColor(0.1f, 0.1f, 0.1f, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
@@ -184,15 +184,30 @@ int DrawCubeColor::Draw() {
 
         cubeShader->Use();
         auto lightPos = glm::vec3(1.2f, 0.5f, 2.0f);
+        glm::vec3 lightColor;
+        lightColor.x = sin(glfwGetTime() * 2.0f);
+        lightColor.y = sin(glfwGetTime() * 0.7f);
+        lightColor.z = sin(glfwGetTime() * 1.3f);
+        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
+
         glm::mat4 cubeModel = glm::mat4(1.0f);
         cubeModel = glm::rotate(cubeModel, (float) glfwGetTime(), glm::vec3(0, 1, 0));
-        cubeShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-        cubeShader->setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         cubeShader->setVec3("lightPos", lightPos);
         cubeShader->setVec3("viewPos", CameraTemp::cameraPos);
         cubeShader->setMatrix("model", cubeModel);
         cubeShader->setMatrix("view", view);
         cubeShader->setMatrix("projection", projection);
+
+        cubeShader->setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+        cubeShader->setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+        cubeShader->setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        cubeShader->setFloat("material.shininess", 32.0f);
+
+        cubeShader->setVec3("light.ambient", ambientColor);
+        cubeShader->setVec3("light.diffuse", diffuseColor); // 将光照调暗了一些以搭配场景
+        cubeShader->setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+
         drawTriangleUtil->Draw();
 
 
