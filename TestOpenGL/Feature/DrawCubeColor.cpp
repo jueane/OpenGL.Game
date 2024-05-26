@@ -182,6 +182,7 @@ int DrawCubeColor::Draw() {
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(CameraTemp::fov), (float) this->width / this->height, 0.1f, 100.0f);
 
+        // 绘制一个立方体，用于演示灯光效果
         cubeShader->Use();
         auto lightPos = glm::vec3(1.2f, 0.5f, 2.0f);
         glm::vec3 lightColor;
@@ -211,6 +212,7 @@ int DrawCubeColor::Draw() {
         drawTriangleUtil->Draw();
 
 
+        // 画个灯（仅仅是画出来，其实没什么用）
         lightShader->Use();
         glm::mat4 lightModel = glm::mat4(1.0f);
         lightModel = glm::translate(lightModel, lightPos);
