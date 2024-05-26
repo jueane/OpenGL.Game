@@ -118,6 +118,7 @@ int DrawCubeColor::Draw() {
     // 使用纹理
     auto texture = new TextureUtil("resources\\textures\\container.jpg", false);
     auto texture2 = new TextureUtil("resources\\textures\\awesomeface.png", true);
+    auto texture3 = new TextureUtil("resources\\textures\\container2.png", true);
 
 
     auto lightShader = new ShaderUtil("Shader\\shader4_light.vert",
@@ -157,6 +158,8 @@ int DrawCubeColor::Draw() {
         glActiveTexture(GL_TEXTURE1); // 在绑定纹理之前先激活纹理单元
         glBindTexture(GL_TEXTURE_2D, texture2->texture);
 
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, texture3->texture);
 
         // 模型矩阵:放倒
 //        glm::mat4 cubeModel = glm::mat4(1.0f);
@@ -184,30 +187,33 @@ int DrawCubeColor::Draw() {
 
         // 绘制一个立方体，用于演示灯光效果
         cubeShader->Use();
-        auto lightPos = glm::vec3(1.2f, 0.5f, 2.0f);
-        glm::vec3 lightColor;
-        lightColor.x = sin(glfwGetTime() * 2.0f);
-        lightColor.y = sin(glfwGetTime() * 0.7f);
-        lightColor.z = sin(glfwGetTime() * 1.3f);
+        auto lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
+        glm::vec3 lightColor = glm::vec3(1.0f);
+//        lightColor.x = sin(glfwGetTime() * 2.0f);
+//        lightColor.y = sin(glfwGetTime() * 0.7f);
+//        lightColor.z = sin(glfwGetTime() * 1.3f);
         glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
         glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
 
         glm::mat4 cubeModel = glm::mat4(1.0f);
-        cubeModel = glm::rotate(cubeModel, (float) glfwGetTime(), glm::vec3(0, 1, 0));
+//        cubeModel = glm::rotate(cubeModel, (float) glfwGetTime(), glm::vec3(0, 1, 0));
         cubeShader->setVec3("lightPos", lightPos);
         cubeShader->setVec3("viewPos", CameraTemp::cameraPos);
         cubeShader->setMatrix("model", cubeModel);
         cubeShader->setMatrix("view", view);
         cubeShader->setMatrix("projection", projection);
 
-        cubeShader->setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
-        cubeShader->setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+//        cubeShader->setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+//        cubeShader->setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
         cubeShader->setVec3("material.specular", 0.5f, 0.5f, 0.5f);
         cubeShader->setFloat("material.shininess", 32.0f);
 
         cubeShader->setVec3("light.ambient", ambientColor);
         cubeShader->setVec3("light.diffuse", diffuseColor); // 将光照调暗了一些以搭配场景
         cubeShader->setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+
+        // 设置纹理
+        cubeShader->setInt("material.diffuse", 2);
 
         drawTriangleUtil->Draw();
 
