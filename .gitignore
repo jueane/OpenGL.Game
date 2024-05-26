@@ -352,3 +352,4 @@ _deps
 
 cmakebuild
 cmake-build-debug*
+/Ref/Libs/libassimp-5d.dll
