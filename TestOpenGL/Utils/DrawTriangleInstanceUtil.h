@@ -28,7 +28,7 @@ public:
 
     void Init();
 
-    void setPosArray(glm::vec3 *posArray, int num);
+    void setPosArray(glm::mat4 *matArray, int num);
 
     void Draw();
 

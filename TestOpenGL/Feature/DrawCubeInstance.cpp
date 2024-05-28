@@ -92,25 +92,38 @@ int DrawCubeInstance::draw() {
     auto cubeShader = new ShaderUtil("Shader\\shader6_intance.vert",
                                      "Shader\\shader6_intance.frag");
 
-//    drawTriangleUtil = new DrawTriangleUtil(11, vertices, sizeof(vertices), indices, sizeof(indices));
     drawTriangleInstanceUtil = new DrawTriangleInstanceUtil(11, vertices, sizeof(vertices), indices, sizeof(indices));
 
-    int m = 100;
-    int n = 1000;
+    int m = 400;
+    int n = 500;
     int len = m * n;
-    glm::vec3 *posArray = new glm::vec3[len];
+    glm::mat4 *mat4Array = new glm::mat4[len];
 
     // 生成位置
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
-            int index=i*m+j;
-            posArray[index].x = i*2;
-            posArray[index].y = 0;
-            posArray[index].z = j*2;
+            int index = i * n + j;
+            mat4Array[index] = glm::mat4(1.0f);
+            // 生成随机位置偏移量
+            float offsetX = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * 2.0f - 1.0f;
+            float offsetY = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * 2.0f - 1.0f;
+            float offsetZ = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * 2.0f - 1.0f;
+
+            // 在单位矩阵的基础上进行平移操作，并添加随机位置偏移量
+            mat4Array[index] = glm::translate(mat4Array[index],
+                                              glm::vec3(i * 2 + offsetX, offsetY * 100, j * 2 + offsetZ));
+
+
+            // 生成随机旋转角度
+            float angle = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * glm::two_pi<float>();
+
+            // 对矩阵进行随机旋转
+            mat4Array[index] = glm::rotate(mat4Array[index], angle, glm::vec3(0.0f, 1.0f, 0.0f));
+
         }
     }
 
-    drawTriangleInstanceUtil->setPosArray(posArray, len);
+    drawTriangleInstanceUtil->setPosArray(mat4Array, len);
 
 
     while (!glfwWindowShouldClose(window)) {
@@ -130,17 +143,18 @@ int DrawCubeInstance::draw() {
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(CameraTemp::fov),
                                       (float) WindowUtil::width / WindowUtil::height,
-                                      0.1f, 100.0f);
+                                      0.1f, 10000.0f);
 
 
         glm::mat4 model = glm::mat4(1.0f);
 
         cubeShader->Use();
+        cubeShader->setInt("tex1", texture3->texture_index);
+//        cubeShader->setInt("normalTex", texture4_specular->texture_index);
         cubeShader->setMatrix("view", view);
         cubeShader->setMatrix("projection", projection);
         cubeShader->setMatrix("model", model);
 
-//        drawTriangleUtil->Draw();
         drawTriangleInstanceUtil->Draw();
 
         glfwSwapBuffers(window);

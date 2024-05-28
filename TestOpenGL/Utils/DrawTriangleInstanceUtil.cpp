@@ -60,22 +60,34 @@ DrawTriangleInstanceUtil::~DrawTriangleInstanceUtil() {
     glDeleteBuffers(1, &EBO);
 }
 
-void DrawTriangleInstanceUtil::setPosArray(glm::vec3 *posArray, int num) {
+void DrawTriangleInstanceUtil::setPosArray(glm::mat4 *matArray, int num) {
 
     drawNum=num;
     unsigned int instanceVBO;
     glGenBuffers(1, &instanceVBO);
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * num, posArray, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * num, matArray, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // 实例化位置数据
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
-    glEnableVertexAttribArray(4);
+
+
+//    glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, 1 * sizeof(glm::mat4), (void *) 0);
+//    glEnableVertexAttribArray(4);
+
+// 设置偏移矩阵属性
+    for (int i = 0; i < 4; i++) {
+        glVertexAttribPointer(4 + i, 4, GL_FLOAT, GL_FALSE, 4*sizeof(glm::vec4), (void*) (i*sizeof(glm::vec4)));
+        glEnableVertexAttribArray(4 + i);
+        glVertexAttribDivisor(4 + i, 1); // 告诉OpenGL这是一个实例化属性
+    }
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glVertexAttribDivisor(4, 1);
+    glVertexAttribDivisor(5, 1);
+    glVertexAttribDivisor(6, 1);
+    glVertexAttribDivisor(7, 1);
 
 }

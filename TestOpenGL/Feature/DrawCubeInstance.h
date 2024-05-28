@@ -16,7 +16,6 @@
 
 class DrawCubeInstance {
 public:
-    DrawTriangleUtil *drawTriangleUtil;
     DrawTriangleInstanceUtil *drawTriangleInstanceUtil;
 
     int draw();
