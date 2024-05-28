@@ -4,6 +4,7 @@
 #include "Feature/DrawCube.h"
 #include "Feature/DrawCubeColor.h"
 #include "Feature/TestLoadModel.h"
+#include "Feature/DrawCubeInstance.h"
 #include "Test/Test1.h"
 #include "Utils/ModelUtil.h"
 
@@ -15,9 +16,10 @@ int main() {
 
 //    (new DrawQuadrilateral())->Draw();
 //    (new DrawTexture())->Draw();
-    (new DrawCube())->Draw();
+//    (new DrawCube())->Draw();
 //    (new DrawCubeColor())->Draw();
 //    (new TestLoadModel())->Draw();
+    (new DrawCubeInstance)->draw();
 
 
 //    (new TestMatrix())->Test1();

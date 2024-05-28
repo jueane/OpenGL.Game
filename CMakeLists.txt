@@ -29,7 +29,7 @@ add_executable(TestOpenGL
         TestOpenGL/Utils/Model/Mesh.cpp
         TestOpenGL/Utils/Model/Mesh.h
         TestOpenGL/Utils/Model/Model.cpp
-        TestOpenGL/Utils/Model/Model.h TestOpenGL/Utils/WindowUtil.cpp TestOpenGL/Utils/WindowUtil.h)
+        TestOpenGL/Utils/Model/Model.h TestOpenGL/Utils/WindowUtil.cpp TestOpenGL/Utils/WindowUtil.h TestOpenGL/Feature/DrawCubeInstance.cpp TestOpenGL/Feature/DrawCubeInstance.h TestOpenGL/Utils/DrawTriangleInstanceUtil.cpp TestOpenGL/Utils/DrawTriangleInstanceUtil.h)
 
 target_include_directories(TestOpenGL PUBLIC ${PROJECT_SOURCE_DIR}/Ref/Include/)
 
