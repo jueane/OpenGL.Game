@@ -35,5 +35,11 @@ TextureUtil::TextureUtil(const char *path, bool hasAlpha) {
     stbi_image_free(data);
 }
 
+void TextureUtil::active(int index) {
+    texture_index = index;
+    glActiveTexture(GL_TEXTURE0 + index);
+    glBindTexture(GL_TEXTURE_2D, texture);
+}
+
 TextureUtil::~TextureUtil() {
 }

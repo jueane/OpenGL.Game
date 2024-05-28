@@ -9,8 +9,8 @@ ShaderUtil::ShaderUtil(const GLchar *vertexPath, const GLchar *fragmentPath) {
     string fragCode;
     ifstream vShaderFile;
     ifstream fShaderFile;
-    cout << "vertex path: " << vertexPath;
-    cout << "fragment path: " << fragmentPath;
+    cout << "vertex path: " << vertexPath << endl;
+    cout << "fragment path: " << fragmentPath << endl;
     vShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
     fShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
     try {

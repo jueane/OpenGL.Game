@@ -6,57 +6,14 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
-DrawTexture::DrawTexture() {
-
-}
-
-void DrawTexture::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
-    cout << "reset window size" << endl;
-    glViewport(0, 0, width, height);
-}
-
-void DrawTexture::processInput(GLFWwindow *window) {
-
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, true);
-    }
-}
+#include "../Utils/WindowUtil.h"
+#include "CameraTemp.h"
 
 int DrawTexture::Draw() {
-
     cout << "绘制贴图" << endl;
-    auto err = glfwInit();
-    cout << "init result " << err << endl;
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    this->width = 800;
-    this->height = 600;
+    auto window = WindowUtil::createWindowUtil(800, 600);
 
-    GLFWwindow *window = glfwCreateWindow(this->width, this->height, "Test OpenGL", NULL, NULL);
-    if (window == NULL) {
-        cout << "create gl window failed" << endl;
-        glfwTerminate();
-        return -1;
-    } else {
-        cout << "Window created" << endl;
-    }
-    glfwMakeContextCurrent(window);
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-        cout << "failed init glad" << endl;
-        return -1;
-    }
-
-    // 输出支持的顶点数量
-    int nrAttributes;
-    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-    cout << "Support vertex attributes count: " << nrAttributes << endl;
-
-    glViewport(0, 0, 800, 600);
-    glfwSetFramebufferSizeCallback(window, DrawTexture::framebuffer_size_callback);
     auto shader = new ShaderUtil("Shader\\shader2_texture.vert",
                                  "Shader\\shader2_texture.frag");
 
@@ -88,7 +45,7 @@ int DrawTexture::Draw() {
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glfwSwapBuffers(window);
     while (!glfwWindowShouldClose(window)) {
-        this->processInput(window);
+        CameraTemp::processInput(window);
 
         glClearColor(0.3, 0.3, 0.5, 1);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -110,7 +67,9 @@ int DrawTexture::Draw() {
 
         // 透视矩阵
         glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(45.0f), (float) this->width / this->height, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(CameraTemp::fov),
+                                      (float) WindowUtil::width / WindowUtil::height,
+                                      0.1f, 100.0f);
 
         shader->setMatrix("model", model);
         shader->setMatrix("view", view);

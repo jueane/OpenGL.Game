@@ -9,51 +9,12 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <iostream>
-
-void DrawCubeColor::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
-    cout << "reset window size" << endl;
-    glViewport(0, 0, width, height);
-}
+#include "../Utils/WindowUtil.h"
 
 int DrawCubeColor::Draw() {
     cout << "绘制贴图" << endl;
 
-    auto err = glfwInit();
-
-    cout << "init result " << err << endl;
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
-    GLFWwindow *window = glfwCreateWindow(this->width, this->height, "Test OpenGL", NULL, NULL);
-    if (window == NULL) {
-        cout << "create gl window failed" << endl;
-        glfwTerminate();
-        return -1;
-    } else {
-        cout << "Window created" << endl;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, DrawCubeColor::framebuffer_size_callback);
-
-    glfwSetCursorPosCallback(window, CameraTemp::mouse_callback);
-    glfwSetScrollCallback(window, CameraTemp::scroll_callback);
-
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-        cout << "failed init glad" << endl;
-        return -1;
-    }
-
-    int nrAttributes;
-    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-    cout << "Support vertex attributes count: " << nrAttributes << endl;
+    auto window = WindowUtil::createWindowUtil(800, 600);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -126,6 +87,11 @@ int DrawCubeColor::Draw() {
     auto texture3 = new TextureUtil("resources\\textures\\container2.png", true);
     auto texture4_specular = new TextureUtil("resources\\textures\\container2_specular.png", true);
 
+    texture->active(0);
+    texture2->active(1);
+    texture3->active(2);
+    texture4_specular->active(3);
+
 
     auto lightShader = new ShaderUtil("Shader\\shader4_light.vert",
                                       "Shader\\shader4_light.frag");
@@ -146,7 +112,6 @@ int DrawCubeColor::Draw() {
             glm::vec3(-1.3f, 1.0f, -1.5f)
     };
 
-    glfwSwapBuffers(window);
     while (!glfwWindowShouldClose(window)) {
         CameraTemp::processInput(window);
 
@@ -155,17 +120,6 @@ int DrawCubeColor::Draw() {
 
         drawTriangleUtil->Draw();
 
-        glActiveTexture(GL_TEXTURE0); // 在绑定纹理之前先激活纹理单元
-        glBindTexture(GL_TEXTURE_2D, texture->texture);
-
-        glActiveTexture(GL_TEXTURE1); // 在绑定纹理之前先激活纹理单元
-        glBindTexture(GL_TEXTURE_2D, texture2->texture);
-
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, texture3->texture);
-
-        glActiveTexture(GL_TEXTURE3);
-        glBindTexture(GL_TEXTURE_2D, texture4_specular->texture);
 
         // 模型矩阵:放倒
 //        glm::mat4 cubeModel = glm::mat4(1.0f);
@@ -189,7 +143,9 @@ int DrawCubeColor::Draw() {
 
         // 透视矩阵
         glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(CameraTemp::fov), (float) this->width / this->height, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(CameraTemp::fov),
+                                      (float) WindowUtil::width / WindowUtil::height,
+                                      0.1f, 100.0f);
 
         // 绘制一个立方体，用于演示灯光效果
         cubeShader->Use();
@@ -212,9 +168,9 @@ int DrawCubeColor::Draw() {
 //        cubeShader->setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
 //        cubeShader->setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
         // 设置纹理
-        cubeShader->setInt("material.diffuse", 2);
+        cubeShader->setInt("material.diffuse", texture3->texture_index);
 //        cubeShader->setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-        cubeShader->setInt("material.specular", 3);
+        cubeShader->setInt("material.specular", texture4_specular->texture_index);
         cubeShader->setFloat("material.shininess", 32.0f);
 
         cubeShader->setVec3("light.ambient", ambientColor);
@@ -233,7 +189,6 @@ int DrawCubeColor::Draw() {
         lightShader->setMatrix("view", view);
         lightShader->setMatrix("projection", projection);
         drawTriangleUtil2->Draw();
-
 
 
         glfwSwapBuffers(window);

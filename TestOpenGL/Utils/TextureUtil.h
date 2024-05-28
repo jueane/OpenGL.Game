@@ -16,7 +16,11 @@ public:
 
     unsigned char *data;
 
+    int texture_index;
+
     TextureUtil(const char *path, bool hasAlpha);
+
+    void active(int index);
 
     ~TextureUtil();
 };

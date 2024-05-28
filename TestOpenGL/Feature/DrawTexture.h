@@ -16,16 +16,7 @@ using namespace std;
 
 class DrawTexture {
 public:
-    int width;
-    int height;
-
     DrawTriangleUtil *drawTriangleUtil;
-
-    DrawTexture();
-
-    static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-
-    void processInput(GLFWwindow *window);
 
     int Draw();
 };

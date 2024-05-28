@@ -30,8 +30,6 @@ void Model::loadModel(string path) {
 
 void Model::processNode(aiNode *node, const aiScene *scene) {
     // 处理节点中所有网格（如果存在）
-    cout << "数量: " << node->mNumMeshes << "," << node->mNumChildren << endl;
-
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         auto mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(processMesh(mesh, scene));

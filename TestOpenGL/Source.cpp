@@ -16,8 +16,8 @@ int main() {
 //    (new DrawQuadrilateral())->Draw();
 //    (new DrawTexture())->Draw();
 //    (new DrawCube())->Draw();
-//    (new DrawCubeColor())->Draw();
-    (new TestLoadModel())->Draw();
+    (new DrawCubeColor())->Draw();
+//    (new TestLoadModel())->Draw();
 
 
 //    (new TestMatrix())->Test1();

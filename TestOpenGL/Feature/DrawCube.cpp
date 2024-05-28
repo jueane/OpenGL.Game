@@ -3,51 +3,12 @@
 //
 
 #include "DrawCube.h"
-
-void DrawCube::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
-    cout << "reset window size" << endl;
-    glViewport(0, 0, width, height);
-}
+#include "../Utils/WindowUtil.h"
 
 int DrawCube::Draw() {
     cout << "绘制贴图" << endl;
 
-    auto err = glfwInit();
-
-    cout << "init result " << err << endl;
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
-    GLFWwindow *window = glfwCreateWindow(this->width, this->height, "Test OpenGL", NULL, NULL);
-    if (window == NULL) {
-        cout << "create gl window failed" << endl;
-        glfwTerminate();
-        return -1;
-    } else {
-        cout << "Window created" << endl;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, DrawCube::framebuffer_size_callback);
-
-    glfwSetCursorPosCallback(window, CameraTemp::mouse_callback);
-    glfwSetScrollCallback(window, CameraTemp::scroll_callback);
-
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-        cout << "failed init glad" << endl;
-        return -1;
-    }
-
-    int nrAttributes;
-    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-    cout << "Support vertex attributes count: " << nrAttributes << endl;
+    auto window = WindowUtil::createWindowUtil(800, 600);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -144,12 +105,8 @@ int DrawCube::Draw() {
         glClearColor(0.3, 0.3, 0.5, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glActiveTexture(GL_TEXTURE0); // 在绑定纹理之前先激活纹理单元
-        glBindTexture(GL_TEXTURE_2D, texture->texture);
-
-        glActiveTexture(GL_TEXTURE1); // 在绑定纹理之前先激活纹理单元
-        glBindTexture(GL_TEXTURE_2D, texture2->texture);
-
+        texture->active(0);
+        texture2->active(1);
 
         // 模型矩阵:放倒
 //        glm::mat4 model = glm::mat4(1.0f);
@@ -179,7 +136,9 @@ int DrawCube::Draw() {
 
         // 透视矩阵
         glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(CameraTemp::fov), (float) this->width / this->height, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(CameraTemp::fov),
+                                      (float) WindowUtil::width / WindowUtil::height,
+                                      0.1f, 100.0f);
 
 //        shader->setMatrix("model", model);
         shader->setMatrix("view", view);

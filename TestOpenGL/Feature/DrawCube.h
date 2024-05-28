@@ -15,18 +15,7 @@
 
 class DrawCube {
 public:
-    int width = 800;
-    int height = 600;
-
     DrawTriangleUtil *drawTriangleUtil;
-
-//    static void mouse_callback(GLFWwindow *window, double xposIn, double yposIn);
-
-//    static void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
-
-    static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-
-//    void processInput(GLFWwindow *window);
 
     int Draw();
 };
