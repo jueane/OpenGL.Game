@@ -38,8 +38,8 @@ int DrawTexture::Draw() {
 
     shader->Use();
 
-    shader->setInt("ourTexture1", 0);
-    shader->setInt("texture2", 1);
+    shader->setInt("ourTexture1", texture->texture_index);
+    shader->setInt("texture2", texture2->texture_index);
 
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

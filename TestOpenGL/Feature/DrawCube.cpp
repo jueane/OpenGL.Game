@@ -82,8 +82,8 @@ int DrawCube::Draw() {
                                  "Shader\\shader3_cube.frag");
     shader->Use();
 
-    shader->setInt("ourTexture1", 0);
-    shader->setInt("texture2", 1);
+    shader->setInt("ourTexture1", texture->texture_index);
+    shader->setInt("texture2", texture2->texture_index);
 
     glm::vec3 cubePositions[] = {
             glm::vec3(0.0f, 0.0f, 0.0f),
@@ -108,10 +108,6 @@ int DrawCube::Draw() {
         texture->active(0);
         texture2->active(1);
 
-        // 模型矩阵:放倒
-//        glm::mat4 model = glm::mat4(1.0f);
-//        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
         // 观察矩阵
 //        glm::mat4 view = glm::mat4(1.0f);
 //        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
@@ -124,11 +120,6 @@ int DrawCube::Draw() {
 //        glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
 //        glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 
-
-// 自动移动摄像机
-//        auto radius = 30.0f;
-//        cameraPos.x = sin(glfwGetTime()) * radius;
-//        cameraPos.z = cos(glfwGetTime()) * radius;
 
         glm::mat4 view;
         view = glm::lookAt(CameraTemp::cameraPos, CameraTemp::cameraPos + CameraTemp::cameraFront, up);

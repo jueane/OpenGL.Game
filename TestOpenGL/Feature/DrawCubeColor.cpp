@@ -120,11 +120,6 @@ int DrawCubeColor::Draw() {
 
         drawTriangleUtil->Draw();
 
-
-        // 模型矩阵:放倒
-//        glm::mat4 cubeModel = glm::mat4(1.0f);
-//        cubeModel = glm::rotate(cubeModel, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
         // 观察矩阵
 //        glm::mat4 view = glm::mat4(1.0f);
 //        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
