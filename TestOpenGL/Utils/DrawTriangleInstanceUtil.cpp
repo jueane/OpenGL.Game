@@ -78,18 +78,13 @@ void DrawTriangleInstanceUtil::setPosArray(glm::mat4 *matArray, int num)
     //    glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, 1 * sizeof(glm::mat4), (void *) 0);
     //    glEnableVertexAttribArray(4);
 
-    // 设置偏移矩阵属性
+    // 设置偏移矩阵属性（在OpenGL中，每个顶点属性最多只能绑定到vec4大小的数据，所以此矩阵需要设置4次）
     for (int i = 0; i < 4; i++)
     {
         glVertexAttribPointer(4 + i, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(glm::vec4), (void *)(i * sizeof(glm::vec4)));
         glEnableVertexAttribArray(4 + i);
         glVertexAttribDivisor(4 + i, 1); // 告诉OpenGL这是一个实例化属性
     }
-
-    glVertexAttribDivisor(4, 1);
-    glVertexAttribDivisor(5, 1);
-    glVertexAttribDivisor(6, 1);
-    glVertexAttribDivisor(7, 1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
