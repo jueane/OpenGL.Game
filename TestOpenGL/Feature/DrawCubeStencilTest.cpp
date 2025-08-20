@@ -1,0 +1,197 @@
+//
+// Created by Administrator on 2024/5/25.
+//
+
+#include "DrawCubeStencilTest.h"
+#include "../Utils/WindowUtil.h"
+
+int DrawCubeStencilTest::Draw()
+{
+        cout << "绘制贴图" << endl;
+
+        auto window = WindowUtil::createWindowUtil(800, 600);
+
+        glEnable(GL_DEPTH_TEST);
+
+        float vertices[] = {
+            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, 0, 1, 0, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 0, 0, 1, 1.0f, 1.0f,
+            0.5f, 0.5f, -0.5f, 1, 0, 0, 1.0f, 1.0f,
+            -0.5f, 0.5f, -0.5f, 0, 1, 0, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 0.0f,
+
+            -0.5f, -0.5f, 0.5f, 1, 0, 0, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 0, 1, 0, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.5f, 0, 1, 0, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0, 0, 1, 0.0f, 0.0f,
+
+            -0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
+
+            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
+
+            -0.5f, -0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
+            -0.5f, -0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f,
+
+            -0.5f, 0.5f, -0.5f, 1, 0, 0, 0.0f, 1.0f,
+            0.5f, 0.5f, -0.5f, 0, 1, 0, 1.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 0, 0, 1, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1, 0, 0, 1.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 0, 1, 0, 0.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0, 0, 1, 0.0f, 1.0f};
+        unsigned int indices[] = {
+            0, 1, 2,
+            3, 4, 5,
+            6, 7, 8,
+            9, 10, 11,
+            12, 13, 14,
+            15, 16, 17,
+            18, 19, 20,
+            21, 22, 23,
+            24, 25, 26,
+            27, 28, 29,
+            30, 31, 32,
+            33, 34, 35};
+
+        drawTriangleUtil = new DrawTriangleUtil(8, vertices, sizeof(vertices), indices, sizeof(indices));
+
+        // 使用纹理
+        auto texture = new TextureUtil("resources\\textures\\container.jpg", false);
+        // texture->active(0);
+        auto texture2 = new TextureUtil("resources\\textures\\awesomeface.png", true);
+        // texture2->active(1);
+
+        auto shader = new ShaderUtil("Shader\\shader3_cube.vert",
+                                     "Shader\\shader3_cube.frag");
+        shader->Use();
+
+        texture->active(0);
+        texture2->active(1);
+
+        shader->setInt("ourTexture1", texture->texture_index);
+        shader->setInt("texture2", texture2->texture_index);
+
+        glm::vec3 cubePositions[] = {
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(2.0f, 5.0f, -15.0f),
+            glm::vec3(-1.5f, -2.2f, -2.5f),
+            glm::vec3(-3.8f, -2.0f, -12.3f),
+            glm::vec3(2.4f, -0.4f, -3.5f),
+            glm::vec3(-1.7f, 3.0f, -7.5f),
+            glm::vec3(1.3f, -2.0f, -2.5f),
+            glm::vec3(1.5f, 2.0f, -2.5f),
+            glm::vec3(1.5f, 0.2f, -1.5f),
+            glm::vec3(-1.3f, 1.0f, -1.5f)};
+
+        glfwSwapBuffers(window);
+        while (!glfwWindowShouldClose(window))
+        {
+                glEnable(GL_DEPTH_TEST);
+
+                CameraTemp::processInput(window);
+
+                glClearColor(0.3, 0.3, 0.5, 1);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+                // 观察矩阵
+                //        glm::mat4 view = glm::mat4(1.0f);
+                //        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+                // 摄像机
+                //        cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
+                glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+                //        auto cameraDirection = glm::normalize(cameraPos - cameraTarget);
+                glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+                //        glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+                //        glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+
+                glm::mat4 view;
+                view = glm::lookAt(CameraTemp::cameraPos, CameraTemp::cameraPos + CameraTemp::cameraFront, up);
+
+                // 透视矩阵
+                glm::mat4 projection = glm::mat4(1.0f);
+                projection = glm::perspective(glm::radians(CameraTemp::fov),
+                                              (float)WindowUtil::width / WindowUtil::height,
+                                              0.1f, 100.0f);
+
+                //        shader->setMatrix("model", model);
+                shader->setMatrix("view", view);
+                shader->setMatrix("projection", projection);
+
+                glEnable(GL_STENCIL_TEST);
+
+                glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+                glStencilFunc(GL_ALWAYS, 1, 0xFF);
+                glStencilMask(0xFF);
+
+                shader->setVec4("colorA", glm::vec4(0.3, 0.5, 0.5, 1));
+
+                shader->setBool("replaceColor", false);
+                Draw1(cubePositions, shader, 1);
+
+                glDisable(GL_DEPTH_TEST);
+                glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+                glStencilMask(0x00);
+
+                shader->setBool("replaceColor", true);
+                Draw1(cubePositions, shader, 1.1f);
+
+                glStencilMask(0xFF);
+                glEnable(GL_DEPTH_TEST);
+
+                glfwSwapBuffers(window);
+                glfwPollEvents();
+        }
+
+        delete drawTriangleUtil;
+
+        glfwTerminate();
+        return 0;
+}
+
+void DrawCubeStencilTest::Draw1(glm::vec3 cubePositions[], ShaderUtil *shader, float scale)
+{
+        for (int i = 10; i > 0; i--)
+        {
+                glm::mat4 model = glm::mat4(1.0f);
+                model = glm::scale(model, glm::vec3(0.2f * (i + 1), 0.2f * (i + 1), 0.2f * (i + 1)));
+                model = glm::translate(model, cubePositions[i]);
+
+                auto rotInAxis = glm::vec3(0.0f, 0.0f, 0.0f);
+                auto aa = i % 3;
+                if (aa == 0)
+                {
+                        rotInAxis.x = 1.0f;
+                }
+                else if (aa == 1)
+                {
+                        rotInAxis.y = 1.0f;
+                }
+                else
+                {
+                        rotInAxis.z = 1.0f;
+                }
+                //            model = glm::rotate(model, (float) glfwGetTime() * i, rotInAxis);
+
+                model = glm::scale(model, glm::vec3(scale, scale, scale));
+
+                shader->setMatrix("model", model);
+                glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+        }
+}

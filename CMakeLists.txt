@@ -14,6 +14,8 @@ add_executable(TestOpenGL
         TestOpenGL/Feature/TestMatrix.h
         TestOpenGL/Feature/DrawCube.cpp
         TestOpenGL/Feature/DrawCube.h
+        TestOpenGL/Feature/DrawCubeStencilTest.h
+        TestOpenGL/Feature/DrawCubeStencilTest.cpp
         TestOpenGL/Feature/DrawCubeColor.cpp
         TestOpenGL/Feature/DrawCubeColor.h
         TestOpenGL/Feature/TestLoadModel.cpp

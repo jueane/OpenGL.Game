@@ -33,6 +33,8 @@ public:
 
     void setVec3(const string &name, glm::vec3 vec3);
 
+    void setVec4(const string &name, glm::vec4 vec4);
+
     void setMatrix(const string &name, glm::mat4 mat4);
 };
 
