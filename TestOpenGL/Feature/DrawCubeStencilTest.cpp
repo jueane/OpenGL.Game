@@ -102,8 +102,6 @@ int DrawCubeStencilTest::Draw()
         glfwSwapBuffers(window);
         while (!glfwWindowShouldClose(window))
         {
-                glEnable(GL_DEPTH_TEST);
-
                 CameraTemp::processInput(window);
 
                 glClearColor(0.3, 0.3, 0.5, 1);
@@ -134,26 +132,25 @@ int DrawCubeStencilTest::Draw()
                 shader->setMatrix("view", view);
                 shader->setMatrix("projection", projection);
 
-                glEnable(GL_STENCIL_TEST);
+
+                glEnable(GL_STENCIL_TEST);  // 启用模板测试
 
                 glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
                 glStencilFunc(GL_ALWAYS, 1, 0xFF);
                 glStencilMask(0xFF);
 
                 shader->setVec4("colorA", glm::vec4(0.3, 0.5, 0.5, 1));
-
                 shader->setBool("replaceColor", false);
                 Draw1(cubePositions, shader, 1);
 
-                glDisable(GL_DEPTH_TEST);
+                glDisable(GL_DEPTH_TEST);  // 禁用深度测试
                 glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
                 glStencilMask(0x00);
-
                 shader->setBool("replaceColor", true);
                 Draw1(cubePositions, shader, 1.1f);
 
                 glStencilMask(0xFF);
-                glEnable(GL_DEPTH_TEST);
+                glEnable(GL_DEPTH_TEST);  // 启用深度测试
 
                 glfwSwapBuffers(window);
                 glfwPollEvents();
